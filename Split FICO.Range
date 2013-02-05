@@ -1,4 +1,6 @@
-> loansData <- read.csv("loansData.csv", header=TRUE, )
+loansData <-read.csv("loansData.csv", as.is=TRUE)
 #split FICO.Range 
+
 FICO_split <- strsplit(as.character(loansData$FICO.Range),"\\-")
-loansData <- transform(loansData, lowFICO=sapply(FICO_split,"[[",1), highFICO=sapply(FICO_split,"[[",2))
+loansData <- transform(loansData, lowFICO=as.numeric(sapply(FICO_split,"[[",1)), highFICO=as.numeric(sapply(FICO_split,"[[",2)))
+loansData$Interest.Rate <- as.numeric(gsub("%$", "", loansData$Interest.Rate))
