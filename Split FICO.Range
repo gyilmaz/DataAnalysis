@@ -1,5 +1,6 @@
 loansData <-read.csv("loansData.csv", as.is=TRUE)
-#split FICO.Range 
+#split FICO.Range
+#convert factor to numeric variable
 
 FICO_split <- strsplit(as.character(loansData$FICO.Range),"\\-")
 loansData <- transform(loansData, lowFICO=as.numeric(sapply(FICO_split,"[[",1)), highFICO=as.numeric(sapply(FICO_split,"[[",2)))
