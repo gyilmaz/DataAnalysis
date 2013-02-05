@@ -1,0 +1,3 @@
+#split FICO.Range 
+FICO_split <- strsplit(as.character(loansData$FICO.Range),"\\-")
+loansData <- transform(loansData, lowFICO=sapply(FICO_split,"[[",1), highFICO=sapply(FICO_split,"[[",2))
