@@ -20,6 +20,7 @@ sum(is.na(loansData))
 #Deal with na`s 
 loansData<- na.omit(loansData)
 
+
 # CLEAN DATA
 #*************************************************************************
 #split FICO.Range
@@ -28,6 +29,7 @@ loansData<- na.omit(loansData)
 FICO_split <- strsplit(as.character(loansData$FICO.Range),"\\-")
 loansData <- transform(loansData, lowFICO=as.numeric(sapply(FICO_split,"[[",1)), highFICO=as.numeric(sapply(FICO_split,"[[",2)))
 loansData$Interest.Rate <- as.numeric(gsub("%$", "", loansData$Interest.Rate))
+loansData$Employment.Length <- factor(loansData$Employment.Length, levels=c("<1 year","1 year","2 years","3 years","4 years","5 years","6 years","7 years","8 years","9 years","10 years", "10+ years"))
 
 # EXPLOTORY ANALYSIS
 #***************************************************************************
@@ -38,3 +40,8 @@ hist(loansData$lowFICO, breaks = 10)
 > plot(loansData$Interest.Rate, loansData$lowFICO, pch=19)
 > res=lm(loansData$Interest.Rate~loansData$lowFICO)
 > res
+
+# 3D Scatterplot
+library(scatterplot3d)
+attach(loansData)
+s3d <-scatterplot3d(loansData$Employment.Length,loansData$lowFICO, loansData$Interest.Rate, pch=16, highlight.3d=TRUE,type="h", main="3D Scatterplot")
