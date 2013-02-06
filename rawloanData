@@ -1,5 +1,11 @@
 #PROCESSING
 #************************************************************************
+library(knitr) 
+library(markdown)  
+knit('test.rmd', 'test.md') # creates md file 
+markdownToHTML('test.md', 'test.html') # creates html file
+browseURL( paste0( 'file://', getwd(), "/", "test.html"))) # should display HTML file in browser.
+
 loansData <-read.csv("loansData.csv", as.is=TRUE)
 dateDownloaded<- date()
 #This program written in windows
