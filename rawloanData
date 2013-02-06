@@ -1,2 +1,34 @@
-Processing
+#PROCESSING
 #************************************************************************
+loansData <-read.csv("loansData.csv", as.is=TRUE)
+dateDownloaded<- date()
+#This program written in windows
+save(loansData, dateDownloaded, file = "C:\\Users\\hasne\\Desktop\\DataAnalysis\\Data\\loansData.rda")
+#************************************************************************
+#LOOK AT DATA SET
+#************************************************************************
+head(loansData)
+summary(loansData)
+sapply(loansData[1, ], class)
+sum(is.na(loansData))
+#Deal with na`s 
+loansData<- na.omit(loansData)
+
+# CLEAN DATA
+#*************************************************************************
+#split FICO.Range
+#convert factor to numeric variable
+
+FICO_split <- strsplit(as.character(loansData$FICO.Range),"\\-")
+loansData <- transform(loansData, lowFICO=as.numeric(sapply(FICO_split,"[[",1)), highFICO=as.numeric(sapply(FICO_split,"[[",2)))
+loansData$Interest.Rate <- as.numeric(gsub("%$", "", loansData$Interest.Rate))
+
+# EXPLOTORY ANALYSIS
+#***************************************************************************
+#Make some univariate plots/summaries
+hist(loansData$Amount.Requested, breaks = 1000)
+hist(loansData$lowFICO, breaks = 10)
+
+> plot(loansData$Interest.Rate, loansData$lowFICO, pch=19)
+> res=lm(loansData$Interest.Rate~loansData$lowFICO)
+> res
