@@ -37,11 +37,22 @@ loansData$Employment.Length <- factor(loansData$Employment.Length, levels=c("<1 
 hist(loansData$Amount.Requested, breaks = 1000)
 hist(loansData$lowFICO, breaks = 10)
 
-> plot(loansData$Interest.Rate, loansData$lowFICO, pch=19)
-> res=lm(loansData$Interest.Rate~loansData$lowFICO)
-> res
+plot(loansData$Interest.Rate, loansData$lowFICO, pch=19)
+res=lm(loansData$Interest.Rate~loansData$lowFICO)
+res
 
 # 3D Scatterplot
 library(scatterplot3d)
 attach(loansData)
 s3d <-scatterplot3d(loansData$Employment.Length,loansData$lowFICO, loansData$Interest.Rate, pch=16, highlight.3d=TRUE,type="h", main="3D Scatterplot")
+
+boxplot(loansData$Interest.Rate ~ as.factor(loansData$Home.Ownership),col=c("blue","orange"),varwidth=TRUE)
+
+dens <- density(loansData$Interest.Rate)
+plot(dens,lwd=3,col="blue")
+
+denslowFico <- density(loansData$Interest.Rate[which(loansData$lowFICO<700)])
+plot(dens,lwd=3,col="blue")
+lines(denslowFico,lwd=3,col="orange")
+denslowFico1 <- density(loansData$Interest.Rate[which(loansData$lowFICO>700)])
+lines(denslowFico1,lwd=3,col="green")
