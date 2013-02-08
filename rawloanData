@@ -56,3 +56,12 @@ plot(dens,lwd=3,col="blue")
 lines(denslowFico,lwd=3,col="orange")
 denslowFico1 <- density(loansData$Interest.Rate[which(loansData$lowFICO>700)])
 lines(denslowFico1,lwd=3,col="green")
+
+denslowFicoE <- density(loansData$Interest.Rate[which(loansData$lowFICO>719)])
+denslowFicoM <- density(loansData$Interest.Rate[which(loansData$lowFICO>679,loansData$lowFICO<720)])
+denslowFicoP <- density(loansData$Interest.Rate[which(loansData$lowFICO<679)])
+plot(dens,lwd=3,col="blue")
+lines(denslowFicoE,lwd=3,col="orange")
+lines(denslowFicoM,lwd=3,col="black")
+lines(denslowFicoP,lwd=3,col="red")
+
