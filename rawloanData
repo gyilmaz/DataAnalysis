@@ -11,6 +11,39 @@ dateDownloaded<- date()
 #This program written in windows
 save(loansData, dateDownloaded, file = "C:\\Users\\hasne\\Desktop\\DataAnalysis\\Data\\loansData.rda")
 #************************************************************************
+# DEAL WITH MISSING DATA
+#***********************************************************************
+install.packages("rrcovNA") # Multiple imputation package
+library(rrcovNA)
+
+# small func to extract rows with missing values
+extractMISSrows = function(df) {
+  index = which(is.na(df),arr.ind=T)
+  row.index = unique(index[,"row"])
+  return(df[row.index,])
+}
+
+# Offending rows with missing values
+miss.rows = extractMISSrows(loansData)
+
+# Variables with Missing Values
+# monthly.income
+# open.credit.lines
+# revolving.credit.balance
+# inquiries.in.the.last.6.months
+
+imputedLoans = as.data.frame(impSeq(loansData)) #impSeq is a function from rrcovNA package
+
+# keep only imputed variables and rename them to imp.varname format
+imputedLoans = imputedLoans[,c("monthly.income","open.credit.lines","revolving.credit.balance","inquiries.in.the.last.6.months")]
+names(imputedLoans) = c("imp.monthly.income","imp.open.credit.lines","imp.revolving.credit.balance","imp.inquiries.in.the.last.6.months")
+
+# merge original df with imputed df
+tidyDf = merge(loansData,imputedLoans,by = "row.names")
+
+# Have a look on newly imputed variables
+miss.rows2 = extractMISSrows(tidyDf)
+#**************************************************************************************************************************
 #LOOK AT DATA SET
 #************************************************************************
 head(loansData)
