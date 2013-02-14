@@ -1,3 +1,4 @@
+setwd("C://Users//yilmaz//Desktop//Data Analysis//Data Analysiz Assignment1")
 #PROCESSING
 #************************************************************************
 library(knitr) 
