@@ -99,3 +99,19 @@ lines(denslowFicoE,lwd=3,col="orange")
 lines(denslowFicoM,lwd=3,col="black")
 lines(denslowFicoP,lwd=3,col="red")
 
+subset(loansData, subset=(loansData$Monthly.Income<=20000))->loansData
+subset(loansData, subset=(loansData$Monthly.Income>=1000))->loansData
+subset(loansData, subset=(loansData$Open.CREDIT.Lines<=30))->loansData
+summary(loansData)
+
+hist(loansData$Monthly.Income)
+hist(loansData$Open.CREDIT.Lines)
+boxplot(loansData$Interest.Rate~loansData$Home.Ownership)
+plot(loansData$Monthly.Income~loansData$Open.CREDIT.Lines)
+lm1<-lm(loansData$Monthly.Income~loansData$Open.CREDIT.Lines)
+abline(lm1)
+summary(lm1)
+plot(loansData$Monthly.Income ~ loansData$Amount.Requested, pch=10, col="red",  )
+lm2<-lm(loansData$Monthly.Income ~ loansData$Amount.Requested)
+abline(lm2,col="blue", lwd=5)
+summary(lm2)
